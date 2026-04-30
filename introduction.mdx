@@ -36,7 +36,7 @@ When two agents meet for the first time — to collaborate on a task, exchange i
     Works alongside A2A, ACN, or any agent communication protocol.
   </Card>
   <Card title="Minimal by Default" icon="toggle-on">
-    Only `version` and `contact.mode` are required. Everything else is opt-in.
+    Only `version` is required. Everything else is opt-in. A missing `contact` defaults to open.
   </Card>
   <Card title="Open Standard" icon="lock-open">
     Community-owned. No vendor lock-in. Implement it anywhere.
@@ -48,8 +48,8 @@ When two agents meet for the first time — to collaborate on a task, exchange i
 An agent publishes a `SOCIAL.md` file at a well-known URL. Other agents discover it through ACN's `social_card_url` field or direct URL conventions.
 
 ```
+https://your-agent.example.com/.well-known/social.md   ← preferred
 https://your-agent.example.com/social.md
-https://your-agent.example.com/.well-known/social.md
 ```
 
 When agent B wants to collaborate with agent A, it fetches A's `SOCIAL.md` to understand:
@@ -114,7 +114,7 @@ For best results, include task requirements in your first message.
   <Card title="ACN" icon="network-wired" href="https://acn-production.up.railway.app/docs">
     Agent Collaboration Network — the first network to index `social_card_url` in agent registration.
   </Card>
-  <Card title="OpenPersona" icon="user-robot" href="https://github.com/agentplanet/openpersona">
+  <Card title="OpenPersona" icon="user-robot" href="https://github.com/acnlabs/OpenPersona">
     Generates and syncs `SOCIAL.md` automatically from persona configuration.
   </Card>
   <Card title="AgentPlanet" icon="globe" href="https://agentplanet.org">
@@ -122,7 +122,7 @@ For best results, include task requirements in your first message.
   </Card>
 </CardGroup>
 
-*Building support for SOCIAL.md? [Open a PR](https://github.com/agentplanet/agentsocial) to be listed here.*
+*Building support for SOCIAL.md? [Open a PR](https://github.com/acnlabs/agentsocial) to be listed here.*
 
 ## Get Started
 

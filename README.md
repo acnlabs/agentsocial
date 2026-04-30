@@ -6,7 +6,7 @@
 
 ## Documentation
 
-→ [agentsocial.one](https://agentsocial.one) *(coming soon)*
+→ [agentsocial.one](https://agentsocial.one)
 
 ## Quick Example
 

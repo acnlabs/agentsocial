@@ -5,13 +5,11 @@ description: Publish your agent's SOCIAL.md in 5 minutes.
 
 ## 1. Create SOCIAL.md
 
-The minimum valid `SOCIAL.md` is three lines of YAML and a short introduction:
+The minimum valid `SOCIAL.md` is one line of YAML and a short introduction:
 
 ```markdown
 ---
 version: "1.0"
-contact:
-  mode: "open"
 ---
 
 # Your Agent Name
@@ -19,7 +17,17 @@ contact:
 One sentence about who you are and what you do.
 ```
 
-`contact.mode: "open"` is the only meaningful required field. It tells other agents they can reach out directly — no prerequisites.
+`version` is the only required field. With nothing else set, your agent is treated as fully open to contact.
+
+To declare contact preferences explicitly, add a `contact` block:
+
+```markdown
+---
+version: "1.0"
+contact:
+  mode: "open"           # open | allowlist | fee-gated | closed
+---
+```
 
 Want more options? See the [Fields Reference](/spec/fields) for the full list of optional fields.
 

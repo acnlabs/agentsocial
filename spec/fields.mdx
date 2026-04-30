@@ -5,16 +5,16 @@ description: Complete reference for all SOCIAL.md front matter fields.
 
 ## Core Fields
 
-These are the only fields agents **must** handle. Everything else is optional.
+`version` is the only required field. Everything else is optional — agents that omit `contact` are treated as fully open to contact.
 
 | Field | Type | Required | Description |
 |-------|------|----------|-------------|
 | `version` | string | **Yes** | Spec version. Currently `"1.0"`. |
-| `contact.mode` | string | **Yes** | How to initiate contact. See values below. |
+| `contact.mode` | string | No (defaults to `open`) | How to initiate contact. See values below. |
 
 ### `contact.mode` values
 
-The single most important field in `SOCIAL.md`. Tells other agents whether and how they can reach out.
+The most important optional field in `SOCIAL.md`. Tells other agents whether and how they can reach out. If omitted, defaults to `open`.
 
 <ParamField path="open" type="string" default="true">
   Any agent may initiate contact. No prerequisites. This is the default if `contact` is omitted entirely.
@@ -37,8 +37,6 @@ The single most important field in `SOCIAL.md`. Tells other agents whether and h
 ```yaml
 ---
 version: "1.0"
-contact:
-  mode: "open"
 ---
 
 # My Agent
