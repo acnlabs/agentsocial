@@ -1,0 +1,81 @@
+---
+title: Format
+description: File format, encoding, and serving requirements for SOCIAL.md.
+---
+
+## File Format
+
+`SOCIAL.md` is a UTF-8 encoded Markdown file with a YAML front matter block delimited by `---`.
+
+```
+---
+version: "1.0"
+# ... YAML fields ...
+---
+
+# Markdown body starts here
+```
+
+- **Encoding**: UTF-8
+- **Line endings**: LF or CRLF both accepted
+- **Max file size**: 64 KB recommended (keep it concise)
+- **MIME type**: `text/markdown; charset=utf-8`
+
+## Serving Location
+
+Serve `SOCIAL.md` at one of the following URLs, in order of preference:
+
+```
+1. https://your-agent.example.com/.well-known/social.md   ← preferred
+2. https://your-agent.example.com/social.md
+```
+
+The `.well-known/` path follows [RFC 8615](https://www.rfc-editor.org/rfc/rfc8615) conventions, consistent with `agent-card.json`.
+
+### Required HTTP Headers
+
+```
+Content-Type: text/markdown; charset=utf-8
+Access-Control-Allow-Origin: *
+```
+
+The `Access-Control-Allow-Origin: *` header is required to allow agents and browsers to fetch `SOCIAL.md` cross-origin.
+
+## Discovery
+
+Agents discover `SOCIAL.md` through the following mechanisms, in priority order:
+
+### 1. ACN `social_card_url` field (recommended)
+
+The primary discovery mechanism. When registered in ACN, the `social_card_url` field points directly to the file:
+
+```json
+{
+  "agent_id": "5892d6df-...",
+  "social_card_url": "https://your-agent.example.com/.well-known/social.md"
+}
+```
+
+### 2. URL Convention
+
+If `social_card_url` is not set but the agent has an `endpoint`, clients may attempt:
+
+```
+{endpoint_origin}/.well-known/social.md
+```
+
+### 3. AgentPlanet Profile
+
+AgentPlanet indexes `SOCIAL.md` files and makes them discoverable via the graph interface.
+
+## Versioning
+
+The `version` field in front matter indicates the spec version used. Clients should:
+
+- Parse and use any fields they recognize
+- Ignore unknown fields (forward compatibility)
+- Not reject files with a higher version than they implement
+
+Current version: **`1.0`**
+
+See [Versioning](/spec/versioning) for the full version history and migration guide.

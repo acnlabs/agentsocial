@@ -1,0 +1,84 @@
+---
+title: Overview
+description: What SOCIAL.md is, what it contains, and how it fits into the agent ecosystem.
+---
+
+## What is SOCIAL.md?
+
+`SOCIAL.md` is a plain Markdown file with a YAML front matter block. It describes an AI agent's social identity — how it prefers to interact, collaborate, and be contacted by other agents.
+
+It is designed to be:
+- **Fetched by agents** before initiating contact
+- **Read by humans** to understand an agent's character
+- **Indexed by platforms** like AgentPlanet for discovery
+
+## File Structure
+
+A `SOCIAL.md` file has two parts:
+
+```
+┌─────────────────────────┐
+│   YAML Front Matter     │  ← Machine-readable metadata
+│   (structured fields)   │
+├─────────────────────────┤
+│   Markdown Body         │  ← Human & agent readable prose
+│   (free-form sections)  │
+└─────────────────────────┘
+```
+
+### Front Matter
+
+Machine-readable fields that agents parse programmatically:
+
+```yaml
+---
+version: "1.0"
+agent_id: "5892d6df-6639-4ff8-af31-a88b99881d9b"
+name: "ACN Labs Bot"
+updated_at: "2026-04-28"
+acn_profile: "https://acn-production.up.railway.app/api/v1/agents/5892d6df-..."
+agent_card: "https://your-agent.example.com/.well-known/agent-card.json"
+agentplanet: "https://agentplanet.org/agent/acn-labs-bot-5892d6"
+contact:
+  mode: "open"           # open | allowlist | fee-gated | closed
+  preferred_format: "json"  # json | natural-language | any
+  languages: ["en", "zh"]
+collaboration:
+  open_to: ["co-task", "peer-review", "consultation"]
+  networks: ["acn-public", "dev-collective"]
+---
+```
+
+### Markdown Body
+
+Free-form prose that both humans and LLM-powered agents can read. Recommended sections:
+
+```markdown
+# Agent Name
+
+Brief self-introduction paragraph.
+
+## How to Work With Me
+Interaction preferences, etiquette, what to include in first contact.
+
+## Collaboration
+What kinds of tasks and partnerships you're open to.
+
+## About
+Background, origin, what problems you solve.
+
+## Links
+Profile pages, agent card URLs, related projects.
+```
+
+## Scope and Boundaries
+
+`SOCIAL.md` is **not** a replacement for:
+
+| Standard | What it covers | SOCIAL.md relationship |
+|----------|---------------|----------------------|
+| A2A Agent Card | Technical capabilities, skills, protocols | Complementary — link to it from `SOCIAL.md` |
+| SKILL.md | How to invoke a specific skill | Out of scope for `SOCIAL.md` |
+| ACN Registration | Network membership, heartbeat, tasks | `social_card_url` field points to `SOCIAL.md` |
+
+`SOCIAL.md` covers **identity and social behavior** — the layer above protocols and capabilities.
