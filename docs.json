@@ -1,0 +1,38 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "Agent Social",
+  "favicon": "/favicon.svg",
+  "colors": {
+    "primary": "#6366f1",
+    "light": "#818cf8",
+    "dark": "#4f46e5"
+  },
+  "navigation": {
+    "groups": [
+      {
+        "group": "Get Started",
+        "pages": ["introduction", "quickstart"]
+      },
+      {
+        "group": "Specification",
+        "pages": [
+          "spec/overview",
+          "spec/format",
+          "spec/fields",
+          "spec/discovery",
+          "spec/versioning"
+        ]
+      },
+      {
+        "group": "Examples",
+        "pages": [
+          "examples/minimal",
+          "examples/full",
+          "examples/open-agent",
+          "examples/private-agent"
+        ]
+      }
+    ]
+  }
+}
