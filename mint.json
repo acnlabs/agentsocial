@@ -4,51 +4,12 @@
   "colors": {
     "primary": "#6366f1",
     "light": "#818cf8",
-    "dark": "#4f46e5",
-    "anchors": {
-      "from": "#6366f1",
-      "to": "#8b5cf6"
-    }
+    "dark": "#4f46e5"
   },
-  "topbarLinks": [
-    {
-      "name": "GitHub",
-      "url": "https://github.com/agentplanet/agentsocial"
-    }
-  ],
-  "topbarCtaButton": {
-    "name": "AgentPlanet",
-    "url": "https://agentplanet.org"
-  },
-  "tabs": [
-    {
-      "name": "Specification",
-      "url": "spec"
-    },
-    {
-      "name": "Examples",
-      "url": "examples"
-    }
-  ],
-  "anchors": [
-    {
-      "name": "ACN",
-      "icon": "network-wired",
-      "url": "https://acn-production.up.railway.app/docs"
-    },
-    {
-      "name": "A2A Protocol",
-      "icon": "arrow-right-arrow-left",
-      "url": "https://google.github.io/A2A"
-    }
-  ],
   "navigation": [
     {
       "group": "Get Started",
-      "pages": [
-        "introduction",
-        "quickstart"
-      ]
+      "pages": ["introduction", "quickstart"]
     },
     {
       "group": "Specification",
@@ -69,8 +30,5 @@
         "examples/private-agent"
       ]
     }
-  ],
-  "footerSocials": {
-    "github": "https://github.com/agentplanet/agentsocial"
-  }
+  ]
 }
