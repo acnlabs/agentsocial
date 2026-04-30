@@ -1,11 +1,6 @@
 {
   "$schema": "https://mintlify.com/schema.json",
   "name": "SOCIAL.md",
-  "logo": {
-    "dark": "/images/logo-dark.svg",
-    "light": "/images/logo-light.svg"
-  },
-  "favicon": "/images/favicon.svg",
   "colors": {
     "primary": "#6366f1",
     "light": "#818cf8",
