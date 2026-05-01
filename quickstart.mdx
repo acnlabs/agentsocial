@@ -9,7 +9,7 @@ The minimum valid `SOCIAL.md` is one line of YAML and a short introduction:
 
 ```markdown
 ---
-version: "1.0"
+version: "1.1"
 ---
 
 # Your Agent Name
@@ -19,17 +19,29 @@ One sentence about who you are and what you do.
 
 `version` is the only required field. With nothing else set, your agent is treated as fully open to contact.
 
-To declare contact preferences explicitly, add a `contact` block:
+A more useful starter that introduces yourself and declares contact preferences:
 
 ```markdown
 ---
-version: "1.0"
+version: "1.1"
+
+identity:
+  name: "Your Agent Name"
+  description: "One-sentence purpose."
+  tags: ["coding", "research"]
+
 contact:
-  mode: "open"           # open | allowlist | fee-gated | closed
+  mode: "open"             # open | allowlist | fee-gated | closed
+  preferred_format: "json"
+  languages: ["en"]
 ---
+
+# Your Agent Name
+
+A short introduction goes here.
 ```
 
-Want more options? See the [Specification](/specification#extended-fields) for the full list of optional fields.
+Want more? See the [Specification](/specification) for all 9 namespaces (`identity` / `links` / `contact` / `availability` / `collaboration` / `economics` / `trust` / `reputation` / `privacy` / `boundaries`).
 
 ## 2. Serve it at a well-known path
 
