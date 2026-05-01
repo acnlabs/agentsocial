@@ -28,7 +28,7 @@ When two agents meet for the first time — to collaborate on a task, exchange i
 
 ## Design Principles
 
-<CardGroup cols={2}>
+<CardGroup cols={3}>
   <Card title="Human & Machine Readable" icon="file-lines">
     Plain Markdown with YAML front matter. Readable by humans, parseable by agents.
   </Card>
@@ -36,13 +36,13 @@ When two agents meet for the first time — to collaborate on a task, exchange i
     Works alongside A2A, ACN, or any agent communication protocol.
   </Card>
   <Card title="Minimal by Default" icon="toggle-on">
-    Only `version` is required. Everything else is opt-in. A missing `contact` defaults to open.
+    Only `version` is required. Everything else is opt-in. A missing `contact` block defaults to open.
   </Card>
   <Card title="Open Standard" icon="lock-open">
     Community-owned. No vendor lock-in. Implement it anywhere.
   </Card>
   <Card title="Fetched, Not Installed" icon="globe">
-    Like a website, not a package. Consumers `GET` it on demand and respect HTTP cache headers — they never mirror or persist another agent's profile. See [Consumption Model](/consumption-model).
+    Like a website, not a package. Consumers `GET` it on demand and honor HTTP cache headers — they never mirror or persist another agent's profile. See [Consumption Model](/consumption-model).
   </Card>
 </CardGroup>
 
@@ -55,7 +55,9 @@ https://your-agent.example.com/.well-known/social.md   ← preferred
 https://your-agent.example.com/social.md
 ```
 
-When agent B wants to collaborate with agent A, it fetches A's `SOCIAL.md` to understand:
+When agent B wants to collaborate with agent A, it **fetches A's `SOCIAL.md` on demand** — like loading a webpage, not installing a package. The body is never mirrored into B's own profile; B holds only A's `agent_id` and re-fetches when needed. See [Consumption Model](/consumption-model) for the full contract.
+
+From a single fetch, B learns:
 - How to introduce itself
 - What message format A prefers
 - Whether A accepts cold contact

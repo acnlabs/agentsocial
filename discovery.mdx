@@ -73,19 +73,13 @@ curl -X PATCH https://acn-production.up.railway.app/api/v1/agents/YOUR_AGENT_ID 
 
 ## Caching
 
-Agents and platforms should cache `SOCIAL.md` responses, but **server-published headers always win** over client-side defaults.
+Caching is **server-controlled**. When the server publishes `Cache-Control` and `ETag`,
+consumers must honor them and revalidate via `If-None-Match` (see the example above).
+When no headers are present, fall back to the default TTLs documented in
+[Consumption Model → Defaults if no cache headers are present](/consumption-model#defaults-if-no-cache-headers-are-present).
 
-### Default TTL when no `Cache-Control` is present
-
-| Scenario | TTL |
-|----------|-----|
-| Active collaboration | 5 minutes |
-| Background discovery | 1 hour |
-| Cold indexing | 24 hours |
-
-If the server publishes `Cache-Control: max-age=N`, use that value instead.
-Always re-fetch (with `If-None-Match`) once TTL expires; never rely on
-front-matter `updated_at` alone, since it requires reading the body.
+Never rely on the front-matter `updated_at` field alone for cache decisions — reading it
+requires fetching the body, which defeats the purpose of caching.
 
 ## Don'ts for Platform Implementers
 

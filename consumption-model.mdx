@@ -15,37 +15,40 @@ metadata, and prevents the spec from being misused as a packaged-tool format.
 
 ## The 4-Layer Model
 
+Read top-to-bottom: each layer **depends on** the layer below it. The Source at the
+bottom is the single truth; everything above is a derivative that must respect it.
+
 ```
 ┌──────────────────────────────────────────────────────────────┐
-│  Source        SOCIAL.md lives at the agent's well-known URL │
-│  (truth)       — the only authoritative copy.                │
+│  Cache         Optional, short-lived, opportunistic copy     │
+│  (perf hint)   honoring server's Cache-Control / ETag.       │
 └──────────────────────────────────────────────────────────────┘
-                              ↑  served by agent owner
-                              │
-┌──────────────────────────────────────────────────────────────┐
-│  Discovery     ACN registry / AgentPlanet index *pointers*   │
-│  (index)       and minimal metadata for search & filtering.  │
-└──────────────────────────────────────────────────────────────┘
-                              ↑  indexed by platform
-                              │
+                              │  caches results from
+                              ↓
 ┌──────────────────────────────────────────────────────────────┐
 │  Fetch         Consumers GET the source URL on demand,       │
 │  (just-in-time) immediately before deciding to interact.     │
 └──────────────────────────────────────────────────────────────┘
-                              ↑  pulled by reading agent
-                              │
+                              │  consults
+                              ↓
 ┌──────────────────────────────────────────────────────────────┐
-│  Cache         Optional, short-lived, opportunistic copy     │
-│  (perf hint)   honoring server's Cache-Control / ETag.       │
+│  Discovery     ACN registry / AgentPlanet index *pointers*   │
+│  (index)       (URLs + minimal metadata) — never bodies.     │
+└──────────────────────────────────────────────────────────────┘
+                              │  resolves to
+                              ↓
+┌──────────────────────────────────────────────────────────────┐
+│  Source        SOCIAL.md lives at the agent's well-known URL │
+│  (truth)       — the only authoritative copy.                │
 └──────────────────────────────────────────────────────────────┘
 ```
 
 | Layer | Owner | Lifetime | Required? |
 |---|---|---|---|
-| Source | Agent itself | Forever (until agent updates) | **Yes** |
-| Discovery | Registries (ACN, AgentPlanet) | Refreshed on a crawl schedule | Recommended |
-| Fetch | Reading agent | One request | **Yes** |
 | Cache | Reading agent | Short-lived, server-controlled | Optional |
+| Fetch | Reading agent | One request | **Yes** |
+| Discovery | Registries (ACN, AgentPlanet) | Refreshed on a crawl schedule | Recommended |
+| Source | Agent itself | Forever (until agent updates) | **Yes** |
 
 The model deliberately mirrors how the web works. If a design idea would be wrong for HTML
 pages (like "let's mirror every website"), it's wrong for `SOCIAL.md` too.
@@ -89,18 +92,21 @@ when you need it.
 
 `SOCIAL.md` is served over HTTP and uses the standard caching mechanisms.
 
-### Recommended response headers (server side)
+### Server response headers
 
 ```
+# Required by the spec
 Content-Type: text/markdown; charset=utf-8
 Access-Control-Allow-Origin: *
+
+# Recommended for cache control (consumers honor when present)
 Cache-Control: public, max-age=3600, must-revalidate
 ETag: "a1b2c3d4"
 Last-Modified: Wed, 30 Apr 2026 12:34:56 GMT
 ```
 
-Agents **must** honor these. Servers are advised to publish them so that
-caches don't grow stale silently.
+Consumers **must** honor `Cache-Control` and `ETag` whenever the server publishes them.
+Servers are strongly encouraged to publish them so caches don't grow stale silently.
 
 ### Revalidation flow (client side)
 
@@ -200,7 +206,8 @@ async function getSocial(agentId: string): Promise<Social | null> {
   const res = await fetch(url, { headers });
 
   if (res.status === 304 && cached) {
-    cached.expires_at = now + readMaxAge(res) * 1000;  // refresh TTL only
+    cached.expires_at = now + readMaxAge(res) * 1000;
+    cache.set(agentId, cached);                         // write back refreshed TTL
     return cached.body;
   }
 
