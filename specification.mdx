@@ -69,17 +69,51 @@ Background, origin, what problems you solve.
 Profile pages, agent card URLs, related projects.
 ```
 
+## Design Principles
+
+`SOCIAL.md` follows five principles that determine what belongs in this spec and what does not:
+
+1. **Single responsibility — the interaction layer only.**
+   `SOCIAL.md` answers *"how do I work with you?"*. Capability, personality, and runtime questions are answered by other specs (see the Scope table below).
+
+2. **Reference, don't duplicate.**
+   Use URL pointers to other specs. Avoid restating their fields. The only exception is an explicitly labelled display snapshot (e.g. `name` cached for sidebar rendering), where the source of truth must be linked.
+
+3. **Optional by default.**
+   Only `version` is required. Every other field is opt-in. Agents that omit a section are treated as having permissive defaults.
+
+4. **Forward compatible.**
+   Clients must ignore unknown fields and accept files with a higher `version` than they implement.
+
+5. **Identity-neutral.**
+   Anonymous and pseudonymous agents are first-class citizens. No required field forces real-world identity disclosure.
+
 ## Scope and Boundaries
 
-`SOCIAL.md` is **not** a replacement for:
+`SOCIAL.md` deliberately covers a narrow slice of agent metadata. Everything else is delegated to a sibling specification:
 
-| Standard | What it covers | SOCIAL.md relationship |
-|----------|---------------|----------------------|
-| A2A Agent Card | Technical capabilities, skills, protocols | Complementary — link to it from `SOCIAL.md` |
-| SKILL.md | How to invoke a specific skill | Out of scope for `SOCIAL.md` |
-| ACN Registration | Network membership, heartbeat, tasks | `social_card_url` field points to `SOCIAL.md` |
+| Question | Spec | Lives in |
+|----------|------|----------|
+| **What can you do?** (skills, protocols, I/O) | [A2A Agent Card](https://google.github.io/A2A) | `agent_card.json` |
+| **Who are you stylistically?** (personality, voice, prompts) | Persona spec (e.g. [OpenPersona](https://github.com/acnlabs/OpenPersona)) | `persona.md` |
+| **Where are you right now?** (online status, networks, task load) | [ACN](https://acn-production.up.railway.app/docs) registry | ACN agent record |
+| **How should I work with you?** (contact, cost, boundaries, norms) | **SOCIAL.md** | `.well-known/social.md` |
+| **How do I invoke a specific skill?** | [SKILL.md](https://agentskills.io) | per-skill `SKILL.md` |
 
-`SOCIAL.md` covers **identity and social behavior** — the layer above protocols and capabilities.
+If a field would naturally answer one of the first three rows, it does **not** belong in `SOCIAL.md` — link to the spec that owns it instead.
+
+### What `SOCIAL.md` is uniquely responsible for
+
+The fields below have no good home in any other spec, which is why `SOCIAL.md` exists:
+
+- **Contact gating** — who is allowed to initiate a conversation (`contact.mode`)
+- **Communication norms** — preferred format, languages, response expectations
+- **Economic terms of contact** — minimum fee, rate card, currency
+- **Privacy posture** — message logging, retention, third-party sharing
+- **Boundaries** — topics avoided, rate limits, off-hours behavior
+- **Reputation pointers** — links to verifiable score / endorsement / history sources
+
+If `SOCIAL.md` ever starts duplicating capability or runtime fields, it has drifted from its single responsibility — the spec must evolve toward smaller, not larger.
 
 ---
 
