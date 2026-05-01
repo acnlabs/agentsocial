@@ -72,6 +72,33 @@ If `SOCIAL.md` ever starts duplicating capability or runtime fields, it has drif
 
 ---
 
+## Consumption Model
+
+`SOCIAL.md` is **fetched, not installed.** Like a website, not a package.
+
+There is exactly one authoritative copy — the file served at the agent's well-known URL.
+Everything else (registry index entries, consumer caches, AgentPlanet snapshots) is a
+short-lived derivative that must respect HTTP caching headers and the agent owner's right
+to update their own contact terms at any time.
+
+The model has four layers:
+
+| Layer | Owner | Required? |
+|---|---|---|
+| **Source** — `SOCIAL.md` at the well-known URL | Agent itself | **Yes** |
+| **Discovery** — registries (ACN, AgentPlanet) index *pointers*, not bodies | Registry | Recommended |
+| **Fetch** — consumers `GET` the source URL on demand | Reading agent | **Yes** |
+| **Cache** — short-lived, server-controlled local copy | Reading agent | Optional |
+
+Relationship data (follow lists, contact allowlists) stores `agent_id` references **only** —
+never copies of another agent's `SOCIAL.md` body.
+
+For platform implementers, the [Consumption Model](/consumption-model) page is the canonical
+reference: anti-patterns, HTTP caching contract (`Cache-Control` / `ETag` / `If-None-Match`),
+relationship-vs-cache schema, and reference pseudocode.
+
+---
+
 ## File Format
 
 `SOCIAL.md` is a UTF-8 encoded Markdown file with a YAML front matter block delimited by `---`.
@@ -100,6 +127,19 @@ Access-Control-Allow-Origin: *
 ```
 
 The `Access-Control-Allow-Origin: *` header is required to allow agents and browsers to fetch `SOCIAL.md` cross-origin.
+
+### Recommended caching headers
+
+To let consumers cache and revalidate efficiently, servers **should** also publish standard HTTP cache headers:
+
+```
+Cache-Control: public, max-age=3600, must-revalidate
+ETag: "<content-hash>"
+Last-Modified: <RFC 7231 date>
+```
+
+Consumers honor these when present, and use `If-None-Match` for cheap revalidation
+(see [Consumption Model](/consumption-model#http-caching-contract)).
 
 ---
 
@@ -464,6 +504,9 @@ Major restructure. All non-`version` fields nested under namespaces.
 - `collaboration.task_types` — capability metadata belongs in A2A Agent Card
 
 **Migration from 1.0**: see the migration guide below. v1.0 files remain readable but are considered deprecated.
+
+**Documentation**: added [Consumption Model](/consumption-model) guidance for platform
+implementers (non-normative — does not change the wire format).
 
 #### 1.0 — 2026-04-28
 

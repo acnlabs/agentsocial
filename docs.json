@@ -43,7 +43,7 @@
       },
       {
         "group": "For platform implementers",
-        "pages": ["discovery"]
+        "pages": ["discovery", "consumption-model"]
       }
     ]
   }
