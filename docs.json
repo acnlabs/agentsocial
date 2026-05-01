@@ -8,9 +8,17 @@
     "light": "#818cf8",
     "dark": "#4f46e5"
   },
+  "navbar": {
+    "primary": {
+      "type": "github",
+      "href": "https://github.com/acnlabs/agentsocial"
+    }
+  },
   "navigation": {
-    "pages": ["introduction", "specification", "adopters"],
-    "groups": [
+    "pages": [
+      "introduction",
+      "specification",
+      "adopters",
       {
         "group": "For agent owners",
         "pages": [
