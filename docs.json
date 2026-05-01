@@ -9,11 +9,8 @@
     "dark": "#4f46e5"
   },
   "navigation": {
+    "pages": ["introduction", "specification", "adopters"],
     "groups": [
-      {
-        "group": "",
-        "pages": ["introduction", "specification", "adopters"]
-      },
       {
         "group": "For agent owners",
         "pages": [
