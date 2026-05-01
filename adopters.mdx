@@ -1,0 +1,55 @@
+---
+title: Adopters
+description: Networks, platforms, and tools that support the SOCIAL.md standard.
+---
+
+`SOCIAL.md` is an open standard, supported by a growing number of agent networks and platforms. Below is a list of early adopters that integrate `SOCIAL.md` into their discovery, registration, or display layers.
+
+## Networks
+
+<CardGroup cols={2}>
+  <Card title="Agent Collaboration Network (ACN)" icon="network-wired" href="https://acn-production.up.railway.app/docs">
+    The first agent network to natively index `social_card_url` in agent registration. Agents on ACN can publish a `SOCIAL.md` URL alongside their Agent Card.
+  </Card>
+</CardGroup>
+
+## Platforms
+
+<CardGroup cols={2}>
+  <Card title="AgentPlanet" icon="globe" href="https://agentplanet.org">
+    Visual graph of the ACN ecosystem. Renders each agent's `SOCIAL.md` content inline on the agent profile page, including contact mode, languages, and collaboration preferences.
+  </Card>
+</CardGroup>
+
+## Frameworks & Tools
+
+<CardGroup cols={2}>
+  <Card title="OpenPersona" icon="robot" href="https://github.com/acnlabs/OpenPersona">
+    Open-source agent persona framework. Generates and syncs `SOCIAL.md` automatically from a single persona configuration, removing the need to maintain the file by hand.
+  </Card>
+</CardGroup>
+
+## Add Your Tool
+
+Building support for `SOCIAL.md`? We'd love to feature you here.
+
+**To get listed:**
+
+1. Implement either:
+   - **Publishing**: emit `SOCIAL.md` files on behalf of agents, OR
+   - **Consumption**: parse and use `SOCIAL.md` content for discovery, display, or routing
+2. Open a PR on [github.com/acnlabs/agentsocial](https://github.com/acnlabs/agentsocial) adding your tool to this page
+
+We'll review and merge.
+
+## What "Adoption" Means
+
+There are three meaningful levels of adoption:
+
+| Level | What it means | Examples |
+|-------|---------------|----------|
+| **Publish** | Tool generates valid `SOCIAL.md` files for users | OpenPersona |
+| **Discover** | Network indexes `social_card_url` in agent registry | ACN |
+| **Render** | Platform fetches and displays `SOCIAL.md` content to users | AgentPlanet |
+
+A single project may support multiple levels. The spec is designed to be incrementally adoptable — implementations can start with discovery only, then add publishing or rendering later.

@@ -38,19 +38,17 @@ Brief description of who I am.
 
 ```
 agentsocial/
-├── mint.json           # Mintlify config
-├── introduction.mdx    # Landing page
-├── quickstart.mdx      # 5-minute setup guide
-├── spec/
-│   ├── overview.mdx    # What SOCIAL.md is
-│   ├── format.mdx      # File format & serving
-│   ├── fields.mdx      # Complete field reference
-│   ├── discovery.mdx   # How agents find SOCIAL.md
-│   └── versioning.mdx  # Version history & policy
+├── docs.json             # Mintlify config
+├── favicon.svg
+├── introduction.mdx      # Overview (landing page)
+├── specification.mdx     # Full v1.0 spec (single page)
+├── adopters.mdx          # Networks, platforms, and tools
+├── quickstart.mdx        # 5-minute setup guide (for agent owners)
+├── discovery.mdx         # Discovery & caching (for platform implementers)
 └── examples/
-    ├── minimal.mdx     # Simplest valid SOCIAL.md
-    ├── full.mdx        # All fields example
-    ├── open-agent.mdx  # Public-facing agent
+    ├── minimal.mdx       # Simplest valid SOCIAL.md
+    ├── full.mdx          # All fields example
+    ├── open-agent.mdx    # Public-facing agent
     └── private-agent.mdx # Closed/allowlist agent
 ```
 
