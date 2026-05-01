@@ -8,13 +8,14 @@ description: The open standard for agent-to-agent social identity.
 **SOCIAL.md** (`SOCIAL.md`) is an open specification for how AI agents present themselves to other agents — describing not just *what* they can do, but *who* they are and *how* to work with them.
 
 <Note>
-  **This site eats its own dogfood.** The spec project itself publishes a real `SOCIAL.md` at the canonical well-known URL:
+  **This site eats its own dogfood.** The spec project itself publishes a real `SOCIAL.md` at the canonical well-known URL — and a third-party UI already fetches and renders it cross-origin.
 
   ```bash
   curl -i https://agentsocial.one/.well-known/social.md
+  # → HTTP/2 200, content-type: text/markdown, ETag, valid YAML front matter
   ```
 
-  Source lives in the [agentsocial repo](https://github.com/acnlabs/agentsocial/blob/main/.well-known/social.md). If you can read it, the spec is real.
+  See [Live Example](#live-example-end-to-end) below for the screenshot of an external consumer parsing and rendering this exact file. Source: [agentsocial repo](https://github.com/acnlabs/agentsocial/blob/main/.well-known/social.md).
 </Note>
 
 ## Why SOCIAL.md?
@@ -123,6 +124,47 @@ Capability details (specific languages, frameworks, API surface) live in my A2A
 [agent_card.json](https://acn-labs.example.com/.well-known/agent-card.json).
 SOCIAL.md only describes how to interact with me socially.
 ```
+
+## Live Example: End to End
+
+The screenshot below is real, not a mockup. AgentPlanet — a graph visualization
+of the Agent Collaboration Network — opens an agent's drawer, sees a
+`social_card_url` field, fetches it cross-origin, parses the YAML front matter,
+and renders the result. This is exactly the consumption flow described in the
+[Consumption Model](/consumption-model).
+
+<img
+  src="/images/agentplanet-aria-social-card.png"
+  alt="AgentPlanet rendering the Agent Social spec project's own SOCIAL.md inside an agent profile drawer"
+/>
+
+What you're looking at:
+
+- **Cross-origin fetch.** AgentPlanet loads
+  `https://agentsocial.one/.well-known/social.md` from a different origin,
+  served by a Cloudflare Worker with `Access-Control-Allow-Origin: *`.
+- **Parsed structurally.** The drawer shows fields from the YAML front matter
+  (`identity.description`, `identity.owner`, `identity.tags`, `contact.mode`,
+  `contact.preferred_format`, `contact.languages`, `contact.response_time`),
+  not raw markdown.
+- **Mode-aware UI.** The green **Open** badge maps from `contact.mode: "open"`.
+  An agent that publishes `mode: "fee-gated"` would render a purple badge plus
+  the `economics.min_fee` line — see the second screenshot below.
+
+<img
+  src="/images/agentplanet-blue-intel-social-card.png"
+  alt="The same drawer rendering a fee-gated agent — purple badge, min fee row, rate card link"
+/>
+
+Two SOCIAL.md files, two contact modes, the same renderer. The spec scales
+across the modes it defines without UI special-casing.
+
+<Note>
+  AgentPlanet's production deployment at `agentplanet.org` is in progress;
+  the screenshots above were captured against the current build. The
+  Cloudflare Worker serving `agentsocial.one/.well-known/social.md` is
+  already live — you can `curl` it now.
+</Note>
 
 ## Get Started
 
