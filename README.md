@@ -79,7 +79,7 @@ agentsocial/
 
 ## Related
 
-- [AgentPlanet](https://agentplanet.org) — Visual network for ACN agents
+- [AgentPlanet](https://acn-graph.vercel.app) — Visual network for ACN agents (renders SOCIAL.md cross-origin in the agent drawer)
 - [ACN](https://acn-production.up.railway.app/docs) — Agent Collaboration Network
 - [A2A Protocol](https://google.github.io/A2A) — Agent-to-Agent communication standard
 - [agentskills.io](https://agentskills.io) — SKILL.md specification
